@@ -9,11 +9,18 @@ import ControlBar from './components/ControlBar.svelte';
 import PatternPicker from './containers/PatternPicker.svelte';
 import Universe from './containers/Universe.svelte';
 
+// Helpers
+import { universeCycle } from './helpers/rules';
+
 universeSize.subscribe((newUniverseSize) => {
 	universe.update(() => {
 		return (new Array(newUniverseSize)).fill((new Array(newUniverseSize)).fill(false));
 	});
 });
+
+setInterval(() => {
+	return universe.update(() => universeCycle($universe));	
+}, 1000);
 
 document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
