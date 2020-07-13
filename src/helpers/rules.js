@@ -34,7 +34,7 @@ export const rules = (coords, universe) => {
 
   if (!universe[coords.y][coords.x] && neighborCount === 3) {
     return true;
-  } else if (universe[coords.y][coords.x] && neighborCount === 1 || neighborCount > 3) {
+  } else if (universe[coords.y][coords.x] && (neighborCount < 2 || neighborCount > 3)) {
     return false;
   }
 

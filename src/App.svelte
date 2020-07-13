@@ -20,7 +20,7 @@ universeSize.subscribe((newUniverseSize) => {
 
 setInterval(() => {
 	return universe.update(() => universeCycle($universe));	
-}, 1000);
+}, 600);
 
 document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
