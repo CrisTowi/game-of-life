@@ -1,16 +1,34 @@
 <script>
+// Store
+import { universe, universeSize } from './store';
+
 // Components
 import ControlBar from './components/ControlBar.svelte';
 
 // Containers
 import PatternPicker from './containers/PatternPicker.svelte';
 import Universe from './containers/Universe.svelte';
+
+universeSize.subscribe((newUniverseSize) => {
+	universe.update(() => {
+		return (new Array(newUniverseSize)).fill((new Array(newUniverseSize)).fill(false));
+	});
+});
+
+document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 
 <style>
+:global(body) {
+	margin: 0px;
+	padding: 0px;
+}
+
 .AppContainer {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	gap: 10px;
+	grid-template-columns: 3fr 1fr;
+	height: calc(100vh - 50px);
 }
 </style>
 
