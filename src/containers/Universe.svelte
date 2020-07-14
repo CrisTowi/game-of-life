@@ -26,7 +26,7 @@ const handleMouseValidAction = (e, coords) => {
 }
 .cell {
   cursor: pointer;
-  border: 0.1px solid #C1C1C1;
+  border: 0.1px solid var(--gray);
   box-sizing: border-box;
 }
 

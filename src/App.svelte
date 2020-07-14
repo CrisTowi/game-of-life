@@ -1,6 +1,12 @@
 <script>
 // Store
-import { universe, universeSize } from './store';
+import {
+	active,
+	interval,
+	speed,
+	universe,
+	universeSize,
+} from './store';
 
 // Components
 import ControlBar from './components/ControlBar.svelte';
@@ -12,15 +18,33 @@ import Universe from './containers/Universe.svelte';
 // Helpers
 import { universeCycle } from './helpers/rules';
 
+
+active.subscribe((newActive) => {
+	if (newActive) {
+		interval.update(() => {
+			return setInterval(() => universe.update(() => universeCycle($universe)), $speed);
+		});
+	} else {
+		clearInterval($interval);
+		interval.update(() => null);
+	}
+});
+
+speed.subscribe((newSpeed) => {
+	clearInterval($interval);
+
+	if ($active){
+		interval.update(() => {
+			return setInterval(() => universe.update(() => universeCycle($universe)), newSpeed);
+		});
+	}
+});
+
 universeSize.subscribe((newUniverseSize) => {
 	universe.update(() => {
 		return (new Array(newUniverseSize)).fill((new Array(newUniverseSize)).fill(false));
 	});
 });
-
-setInterval(() => {
-	return universe.update(() => universeCycle($universe));	
-}, 600);
 
 document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
@@ -31,10 +55,15 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 	padding: 0px;
 }
 
+:global(:root){
+	--background-green: #65C98B;
+	--gray: #C1C1C1;
+}
+
 .AppContainer {
 	display: grid;
 	gap: 10px;
-	grid-template-columns: 3fr 1fr;
+	/* grid-template-columns: 3fr 1fr; */
 	height: calc(100vh - 50px);
 }
 </style>
@@ -43,11 +72,11 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 	<ControlBar />
 
 	<div class="AppContainer">
-		<div class="AppContainer-Universe">
+		<div>
 			<Universe />
 		</div>
-		<div class="AppContainer-PatternPicker">
+		<!-- <div>
 			<PatternPicker />
-		</div>
+		</div> -->
 	</div>
 </div>
