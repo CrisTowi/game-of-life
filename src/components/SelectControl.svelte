@@ -5,9 +5,6 @@ export let onChange;
 </script>
 
 <style>
-.SelectControl {
-  padding: 5px;
-}
 
 .SelectControl-options {
   display: flex

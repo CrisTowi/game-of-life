@@ -25,7 +25,8 @@ const handleControlChange = (value, property) => {
   height: 50px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  padding: 16px 16px 0px 16px;
+  gap: 16px;
 }
 </style>
 
@@ -45,6 +46,7 @@ const handleControlChange = (value, property) => {
       onChange={(value) => handleControlChange(value, 'speed')}
       active={$speed}
       options={[
+        { value: 100, label: "100ms" },
         { value: 300, label: "300ms" },
         { value: 700, label: "700ms" },
         { value: 1000, label: "1s" },

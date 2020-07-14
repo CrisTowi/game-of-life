@@ -1,5 +1,6 @@
 <script>
 import { universe, universeSize } from '../store';
+import { placePatternIntoUniverse } from '../helpers/helpers';
 
 const handleChangeCellStatus = ({y, x}, newStatus) => {
   universe.update((oldUniverse) => {
@@ -15,6 +16,13 @@ const handleMouseValidAction = (e, coords) => {
   } else if (e.buttons === 2) {
     handleChangeCellStatus(coords, false);
   }
+};
+
+const handleDrop = (e, coords) => {
+  const patternId = e.dataTransfer.getData("patternId");
+  const newUniverse = placePatternIntoUniverse($universe, patternId, coords);
+
+  universe.update(() => newUniverse);
 };
 </script>
 
@@ -42,6 +50,8 @@ const handleMouseValidAction = (e, coords) => {
   {#each $universe as universeRow, y}
     {#each universeRow as universeCell, x}
       <div
+        on:drop={(e) => handleDrop(e, { x, y })}
+        ondragover="return false"
         on:mouseover={(e) => handleMouseValidAction(e, {y, x})}
         on:mousedown={(e) => handleMouseValidAction(e, {y, x})}
         class={`cell ${ $universe[y][x] ? 'cell--alive' : '' }`} />

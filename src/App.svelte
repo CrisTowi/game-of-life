@@ -61,10 +61,12 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 }
 
 .AppContainer {
+	padding: 0px 16px 16px 16px;
+	box-sizing: border-box;
 	display: grid;
 	gap: 10px;
-	/* grid-template-columns: 3fr 1fr; */
-	height: calc(100vh - 50px);
+	grid-template-columns: 4fr 1fr;
+	height: calc(100vh - 66px);
 }
 </style>
 
@@ -75,8 +77,8 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 		<div>
 			<Universe />
 		</div>
-		<!-- <div>
+		<div>
 			<PatternPicker />
-		</div> -->
+		</div>
 	</div>
 </div>
