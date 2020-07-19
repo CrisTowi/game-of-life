@@ -18,6 +18,15 @@ import Universe from './containers/Universe.svelte';
 // Helpers
 import { universeCycle } from './helpers/rules';
 
+let visible = false;
+
+const handleMenuClick = () => {
+	visible = !visible;
+};
+
+const handleChangeControl = () => {
+	visible = !visible;
+}
 
 active.subscribe((newActive) => {
 	if (newActive) {
@@ -68,16 +77,48 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 	grid-template-columns: 4fr 1fr;
 	height: calc(100vh - 66px);
 }
+
+.hamburger-button {
+	display: none;
+}
+
+@media screen and (max-width: 1024px) {
+	.PatternPicker-container {
+		display: none;
+	}
+
+	.AppContainer {
+		grid-template-columns: 1fr;
+		height: 100vh;
+	}
+
+	.hamburger-button {
+		border-radius: 50%;
+		display: block;
+		height: 40px;
+		left: 10px;
+		position: fixed;
+		top: 10px;
+		width: 40px;
+		z-index: 1;
+		background-color: #ECECEC;
+		text-align: center;
+		line-height: 40px;
+	}
+}
+
 </style>
 
 <div class="App">
-	<ControlBar />
-
+	<div on:click={handleMenuClick} class="hamburger-button">
+		<i class="fas fa-bars"></i>
+	</div>
+	<ControlBar onChangeControl={handleChangeControl} visible={visible} />
 	<div class="AppContainer">
-		<div>
+		<div class="Universe-container">
 			<Universe />
 		</div>
-		<div>
+		<div class="PatternPicker-container">
 			<PatternPicker />
 		</div>
 	</div>

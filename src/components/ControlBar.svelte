@@ -2,6 +2,8 @@
 import { universeSize, active, interval, speed } from '../store';
 import SelectControl from './SelectControl.svelte';
 
+export let visible;
+export let onChangeControl;
 
 const handleControlChange = (value, property) => {
   switch (property) {
@@ -17,20 +19,42 @@ const handleControlChange = (value, property) => {
     default:
       return;
   }
+
+  onChangeControl();
 };
 </script>
 
 <style>
 .ControlBar {
-  height: 50px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 16px 16px 0px 16px;
   gap: 16px;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 50px;
+  padding: 16px 16px 0px 16px;
+  transition: left 0.3s;
 }
+
+@media screen and (max-width: 1024px) {
+	.ControlBar {
+		position: fixed;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #ECECEC;
+    top: 0px;
+    left: -285px;
+	}
+
+  .ControlBar--visible {
+    left: 0px;
+    top: 0px;
+	}
+}
+
 </style>
 
-<div class="ControlBar">
+<div class={`ControlBar ${visible ? 'ControlBar--visible' : ''}`}>
   <div class="ControlBar-item">
     <SelectControl
       onChange={(value) => handleControlChange(value, 'active')}

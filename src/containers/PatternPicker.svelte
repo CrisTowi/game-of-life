@@ -6,9 +6,60 @@ const handleDragStart = (e, patternId) => {
 };
 </script>
 
+<style>
+.PatternPicker {
+  height: calc(100vh - 80px);
+  overflow-y: scroll;
+}
+</style>
+
 <div class="PatternPicker">
-  <!-- <Pattern name={'pulsar'} /> -->
-  <!-- <Pattern name={'penta-decathlon'} /> -->
-  <Pattern name={'glider'} patternId={'GLIDER'} onDragStart={handleDragStart} />
-  <Pattern name={'pulsar'} patternId={'PULSAR'} onDragStart={handleDragStart} />
+  <Pattern
+    displayName={'Glider'}
+    name={'glider'}
+    patternId={'GLIDER'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Light-weight spaceship'}
+    name={'lwss'}
+    patternId={'LWSS'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Middle-weight spaceship'}
+    name={'mwss'}
+    patternId={'MWSS'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Heavy-weight spaceship'}
+    name={'hwss'}
+    patternId={'HWSS'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Pulsar'}
+    name={'pulsar'}
+    patternId={'PULSAR'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Penta decathlon'}
+    name={'penta-decathlon'}
+    patternId={'PENTA_DECATHLON'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Gospers Glider gun'}
+    name={'gospers-glider-gun'}
+    patternId={'GOSPERS_GLIDER_GUN'}
+    onDragStart={handleDragStart}
+  />
+  <Pattern
+    displayName={'Copperhead'}
+    name={'copperhead'}
+    patternId={'COPPERHEAD'}
+    onDragStart={handleDragStart}
+  />
 </div>
