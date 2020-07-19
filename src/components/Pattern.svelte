@@ -24,6 +24,10 @@ export let onDragStart;
   font-weight: 600;
 }
 
+.Pattern img {
+  cursor: grab;
+}
+
 </style>
 
 <div class="Pattern">

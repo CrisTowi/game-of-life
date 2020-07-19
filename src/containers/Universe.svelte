@@ -1,6 +1,8 @@
 <script>
-import { universe, universeSize } from '../store';
+import { universe, universeSize, draggingPatternId } from '../store';
 import { placePatternIntoUniverse } from '../helpers/helpers';
+
+let prevCoords = { y: 0, x: 0 };
 
 const handleChangeCellStatus = ({y, x}, newStatus) => {
   universe.update((oldUniverse) => {
@@ -31,11 +33,19 @@ const handleMouseOverValidAction = (e, coords) => {
 };
 
 const handleDrop = (e, coords) => {
-  const patternId = e.dataTransfer.getData("patternId");
-  const newUniverse = placePatternIntoUniverse($universe, patternId, coords);
+  const newUniverse = placePatternIntoUniverse($universe, $draggingPatternId, coords);
 
   universe.update(() => newUniverse);
 };
+
+const handleDragOver = (e, coords) => {
+  e.preventDefault();
+
+  // if (prevCoords.x !== coords.x || prevCoords.y !== coords.y) {
+  //   const newUniverse = previewPatternIntoUnivere($universe, $draggingPatternId, coords);
+  //   universe.update(() => newUniverse);
+  // }
+}
 </script>
 
 <style>
@@ -53,6 +63,10 @@ const handleDrop = (e, coords) => {
 .cell--alive {
   background-color: black;
 }
+
+.cell--preview {
+  background-color: red;
+}
 </style>
 
 <div class="Universe" style={`
@@ -63,10 +77,10 @@ const handleDrop = (e, coords) => {
     {#each universeRow as universeCell, x}
       <div
         on:drop={(e) => handleDrop(e, { x, y })}
-        ondragover="return false"
+        on:dragover={(e) => handleDragOver(e, { x, y })}
         on:mouseover={(e) => handleMouseOverValidAction(e, {y, x})}
         on:mousedown={(e) => handleMouseValidAction(e, {y, x})}
-        class={`cell ${ $universe[y][x] ? 'cell--alive' : '' }`} />
+        class={`cell ${ $universe[y][x] === true ? 'cell--alive' : '' } ${ $universe[y][x] === 'preview' ? 'cell--preview' : '' }`} />
     {/each}
   {/each}
 </div>

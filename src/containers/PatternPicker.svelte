@@ -1,8 +1,9 @@
 <script>
+import { draggingPatternId } from '../store';
 import Pattern from '../components/Pattern.svelte';
 
 const handleDragStart = (e, patternId) => {
-  e.dataTransfer.setData("patternId", patternId);
+  draggingPatternId.update(() => patternId);
 };
 </script>
 
@@ -11,9 +12,17 @@ const handleDragStart = (e, patternId) => {
   height: calc(100vh - 80px);
   overflow-y: scroll;
 }
+
+.PatternPicker h3{
+  text-align: center;
+}
 </style>
 
 <div class="PatternPicker">
+  <div class="PatternPicker-title">
+    <h3>Drag and Drop patterns inside the universe</h3>
+  </div>
+
   <Pattern
     displayName={'Glider'}
     name={'glider'}
