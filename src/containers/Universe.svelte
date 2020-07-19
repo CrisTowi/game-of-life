@@ -5,7 +5,7 @@ import { placePatternIntoUniverse } from '../helpers/helpers';
 const handleChangeCellStatus = ({y, x}, newStatus) => {
   universe.update((oldUniverse) => {
     const unvierseClone = JSON.parse(JSON.stringify(oldUniverse));
-    unvierseClone[y][x] = newStatus;
+    unvierseClone[y][x] = newStatus === undefined ? !unvierseClone[y][x] : newStatus;
     return unvierseClone;
   });
 }
@@ -15,6 +15,18 @@ const handleMouseValidAction = (e, coords) => {
     handleChangeCellStatus(coords, true);
   } else if (e.buttons === 2) {
     handleChangeCellStatus(coords, false);
+  } else if (e.buttons === 0) {
+    handleChangeCellStatus(coords);
+  }
+};
+
+const handleMouseOverValidAction = (e, coords) => {
+  if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+    if (e.buttons === 1) {
+      handleChangeCellStatus(coords, true);
+    } else if (e.buttons === 2) {
+      handleChangeCellStatus(coords, false);
+    }
   }
 };
 
@@ -52,9 +64,8 @@ const handleDrop = (e, coords) => {
       <div
         on:drop={(e) => handleDrop(e, { x, y })}
         ondragover="return false"
-        on:mouseover={(e) => handleMouseValidAction(e, {y, x})}
+        on:mouseover={(e) => handleMouseOverValidAction(e, {y, x})}
         on:mousedown={(e) => handleMouseValidAction(e, {y, x})}
-        on:touchend={(e) => handleMouseValidAction(e, {y, x})}
         class={`cell ${ $universe[y][x] ? 'cell--alive' : '' }`} />
     {/each}
   {/each}

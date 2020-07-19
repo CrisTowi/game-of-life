@@ -37,13 +37,13 @@ const handleControlChange = (value, property) => {
 @media screen and (max-width: 1024px) {
 	.ControlBar {
 		position: fixed;
-    display: flex;
     height: 100vh;
-    flex-direction: column;
-    justify-content: space-around;
     background-color: #ECECEC;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     top: 0px;
     left: -285px;
+    padding: 60px 16px;
 	}
 
   .ControlBar--visible {
@@ -60,8 +60,8 @@ const handleControlChange = (value, property) => {
       onChange={(value) => handleControlChange(value, 'active')}
       active={$active}
       options={[
+        { value: false, label: "Paused" },
         { value: true, label: "Active" },
-        { value: false, label: "Pause" },
       ]}
     />
   </div>
