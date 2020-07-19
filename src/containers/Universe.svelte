@@ -54,6 +54,7 @@ const handleDrop = (e, coords) => {
         ondragover="return false"
         on:mouseover={(e) => handleMouseValidAction(e, {y, x})}
         on:mousedown={(e) => handleMouseValidAction(e, {y, x})}
+        on:touchend={(e) => handleMouseValidAction(e, {y, x})}
         class={`cell ${ $universe[y][x] ? 'cell--alive' : '' }`} />
     {/each}
   {/each}
