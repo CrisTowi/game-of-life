@@ -34,5 +34,9 @@ export let onDragStart;
   <div>
     <p>{displayName}</p>
   </div>
-  <img src="/img/{name}.gif" alt={`${name} pattern`} on:dragstart={(e) => onDragStart(e, patternId)}>
+  <img
+    src="/img/{name}.gif"
+    alt={`${name} pattern`}
+    on:dragstart={(e) => onDragStart(e, patternId)}
+  >
 </div>

@@ -1,28 +1,28 @@
 export const getNeighborCount = (coords, universe) => {
   let result = 0;
 
-  if (coords.y > 0 && universe[coords.y - 1][coords.x]) {
+  if (coords.y > 0 && universe[coords.y - 1][coords.x] === true) {
     result += 1;
   }
-  if (coords.y > 0 && coords.x > 0  && universe[coords.y - 1][coords.x - 1]) {
+  if (coords.y > 0 && coords.x > 0  && universe[coords.y - 1][coords.x - 1] === true) {
     result += 1;
   }
-  if (coords.y > 0 && coords.x < (universe.length - 1) && universe[coords.y - 1][coords.x + 1]) {
+  if (coords.y > 0 && coords.x < (universe.length - 1) && universe[coords.y - 1][coords.x + 1] === true) {
     result += 1;
   }
-  if (coords.x > 0  && universe[coords.y][coords.x - 1]) {
+  if (coords.x > 0  && universe[coords.y][coords.x - 1] === true) {
     result += 1;
   }
-  if (coords.x < (universe.length - 1) && universe[coords.y][coords.x + 1]) {
+  if (coords.x < (universe.length - 1) && universe[coords.y][coords.x + 1] === true) {
     result += 1;
   }
-  if ((coords.y < universe.length - 1) && coords.x > 0 && universe[coords.y + 1][coords.x - 1]) {
+  if ((coords.y < universe.length - 1) && coords.x > 0 && universe[coords.y + 1][coords.x - 1] === true) {
     result += 1;
   }
-  if ((coords.y < universe.length - 1) &&  universe[coords.y + 1][coords.x]) {
+  if ((coords.y < universe.length - 1) &&  universe[coords.y + 1][coords.x] === true) {
     result += 1;
   }
-  if ((coords.y < universe.length - 1) && coords.x < (universe.length - 1) && universe[coords.y + 1][coords.x + 1]) {
+  if ((coords.y < universe.length - 1) && coords.x < (universe.length - 1) && universe[coords.y + 1][coords.x + 1] === true) {
     result += 1;
   }
 
@@ -34,7 +34,7 @@ export const rules = (coords, universe) => {
 
   if (!universe[coords.y][coords.x] && neighborCount === 3) {
     return true;
-  } else if (universe[coords.y][coords.x] && (neighborCount < 2 || neighborCount > 3)) {
+  } else if (universe[coords.y][coords.x] === true && (neighborCount < 2 || neighborCount > 3)) {
     return false;
   }
 

@@ -2,10 +2,12 @@
 // Store
 import {
 	active,
+	draggingPatternId,
 	interval,
 	speed,
 	universe,
 	universeSize,
+	dropCoords,
 } from './store';
 
 // Components
@@ -17,6 +19,7 @@ import Universe from './containers/Universe.svelte';
 
 // Helpers
 import { universeCycle } from './helpers/rules';
+import { previewPatternIntoUnivere, removePatternShadow } from './helpers/helpers';
 
 let visible = false;
 
@@ -27,6 +30,20 @@ const handleMenuClick = () => {
 const handleChangeControl = () => {
 	visible = !visible;
 }
+
+const handleDropInApp = (e) => {
+	if (!e.target.classList.contains('cell')) {
+		const newUniverse = removePatternShadow($universe, $draggingPatternId, $dropCoords);
+		universe.update(() => newUniverse);
+	}
+}
+
+dropCoords.subscribe((newDropCoords) => {
+	if (newDropCoords) {
+		const newUniverse = previewPatternIntoUnivere($universe, $draggingPatternId, newDropCoords);
+		universe.update(() => newUniverse);
+	}
+});
 
 active.subscribe((newActive) => {
 	if (newActive) {
@@ -109,7 +126,9 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 
 </style>
 
-<div class="App">
+<div class="App"
+	on:dragover={(e) => e.preventDefault()}
+	on:drop={handleDropInApp}>
 	<div on:click={handleMenuClick} class="hamburger-button">
 		<i class="fas fa-bars"></i>
 	</div>

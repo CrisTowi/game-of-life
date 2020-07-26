@@ -1,6 +1,9 @@
 <script>
-import { universe, universeSize, draggingPatternId } from '../store';
-import { placePatternIntoUniverse } from '../helpers/helpers';
+import { universe, universeSize, draggingPatternId, dropCoords } from '../store';
+import {
+  placePatternIntoUniverse,
+  doesPatterFitsInUniverse,
+} from '../helpers/helpers';
 
 let prevCoords = { y: 0, x: 0 };
 
@@ -33,18 +36,20 @@ const handleMouseOverValidAction = (e, coords) => {
 };
 
 const handleDrop = (e, coords) => {
-  const newUniverse = placePatternIntoUniverse($universe, $draggingPatternId, coords);
-
-  universe.update(() => newUniverse);
+  if (doesPatterFitsInUniverse($universeSize, coords, $draggingPatternId)) {
+    const newUniverse = placePatternIntoUniverse($universe, $draggingPatternId, coords);
+    universe.update(() => newUniverse);
+  }
 };
 
 const handleDragOver = (e, coords) => {
   e.preventDefault();
 
-  // if (prevCoords.x !== coords.x || prevCoords.y !== coords.y) {
-  //   const newUniverse = previewPatternIntoUnivere($universe, $draggingPatternId, coords);
-  //   universe.update(() => newUniverse);
-  // }
+  if (doesPatterFitsInUniverse($universeSize, coords, $draggingPatternId)) {
+    if (prevCoords.x !== coords.x || prevCoords.y !== coords.y) {
+      dropCoords.update(() => coords);
+    }
+  }
 }
 </script>
 
@@ -56,7 +61,7 @@ const handleDragOver = (e, coords) => {
 }
 .cell {
   cursor: pointer;
-  border: 0.1px solid var(--gray);
+  border: 1px solid var(--gray);
   box-sizing: border-box;
 }
 
@@ -65,7 +70,7 @@ const handleDragOver = (e, coords) => {
 }
 
 .cell--preview {
-  background-color: red;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 </style>
 
